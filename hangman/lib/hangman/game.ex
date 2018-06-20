@@ -2,6 +2,7 @@ defmodule Hangman.Game do
   @moduledoc false
 
   alias Dictionary
+  @type t :: %__MODULE__{}
 
   defstruct(
     turns_left: 7,
@@ -70,7 +71,7 @@ defmodule Hangman.Game do
 
   defp reveal_guessed(letters, used) do
     Enum.map(letters, fn letter ->
-      reveal_letter(letter, MapSet.member?(letter, used))
+      reveal_letter(letter, MapSet.member?(used, letter))
     end)
   end
 

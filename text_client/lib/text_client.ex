@@ -1,18 +1,11 @@
 defmodule TextClient do
   @moduledoc """
-  Documentation for TextClient.
+  This module contains the magical APIs for TextClient.
+
+  Why magical?
+  Run the module and you will know.
   """
 
-  @doc """
-  Hello world.
+  defdelegate start(), to: TextClient.Interact
 
-  ## Examples
-
-      iex> TextClient.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
