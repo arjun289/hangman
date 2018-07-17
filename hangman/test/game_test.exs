@@ -16,41 +16,42 @@ defmodule HangmanTest.GameTest do
   test "state isn't modified for game won" do
     game = Game.new_game
     game = Map.put(game, :game_state, :won)
-    assert ^game = Game.make_move(game, "x")
+    {new_game, _} = Game.make_move(game, "x")
+    assert game.game_state == new_game.game_state
   end
 
   test "first occurence state not :already used" do
     game = Game.new_game()
-    new_game = Game.make_move(game, "x")
+    {new_game, _} = Game.make_move(game, "x")
     assert new_game.game_state != :already_used
   end
 
   test "second occurence state :already used" do
     game = Game.new_game()
-    game = Game.make_move(game, "x")
+    {game, _} = Game.make_move(game, "x")
     assert game.game_state != :already_used
 
-    new_game = Game.make_move(game, "x")
+    {new_game, _} = Game.make_move(game, "x")
     assert new_game.game_state == :already_used
   end
 
   test "a good guess is recognized" do
     game = Game.new_game("wibble")
-    game = Game.make_move(game, "w")
+    {game, _} = Game.make_move(game, "w")
     assert game.game_state == :good_guess
-    game = Game.make_move(game, "i")
+    {game, _} = Game.make_move(game, "i")
     assert game.game_state == :good_guess
-    game = Game.make_move(game, "b")
+    {game, _} = Game.make_move(game, "b")
     assert game.game_state == :good_guess
-    game = Game.make_move(game, "l")
+    {game, _} = Game.make_move(game, "l")
     assert game.game_state == :good_guess
-    game = Game.make_move(game, "e")
+    {game, _} = Game.make_move(game, "e")
     assert game.game_state == :won
   end
 
   test "bad guess is recognized" do
     game = Game.new_game("wibble")
-    new_game = Game.make_move(game, "x")
+    {new_game, _} = Game.make_move(game, "x")
     assert new_game.game_state == :bad_guess
     assert new_game.turns_left == game.turns_left - 1
   end
